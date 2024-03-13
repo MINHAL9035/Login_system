@@ -1,0 +1,58 @@
+<%- include('header')-%>
+
+
+    <div class="text-center center-div" id="login">
+        <div class="container w-25 border py-5">
+        
+            <div class="title pb-5">
+                <h2 class="font-weight-bold">Login System</h2>
+                <span id="spn">Log in for the existing user</span>
+            </div>
+            <form action="/login" method="POST" onsubmit="return validate()">
+                <span id="user">Enter your Username</span>
+                <div class="form-group">
+                    <input type="text" class="form-control" placeholder="username" name="username" required>
+                </div>
+                <span id="user">Enter your password</span>
+                <div class="form-group">
+                    <input type="password" class="form-control" placeholder="Password" name="password" required>
+                </div>
+                <p id="error" style="color: red;"></p>
+                <p class="text-danger">
+                    <%= message %>
+                </p>
+                <button type="submit" class="btn btn-success rounded-pill">Submit</button>
+            </form>
+        </div>
+    </div>
+
+    <%- include('footer')-%>
+
+        <script>
+            function validate() {
+                const usernameInput = document.querySelector('input[name="username"]')
+                const passwordInput = document.querySelector('input[name="password"]')
+                const errorMessage = document.getElementById('error')
+
+                // Standard user validation regex
+                const usernameRegex = /^[A-Za-z]{5,16}$/
+
+                if (!usernameRegex.test(usernameInput.value)) {
+                    errorMessage.textContent = 'Invalid username';
+                    return false; // Prevent form submission
+                }
+
+                // Password validation
+                const password = passwordInput.value;
+                const passwordRegex=/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/
+
+                if (!passwordRegex.test(password)) {
+                    errorMessage.textContent = 'Invalid Password';
+                    return false; // Prevent form submission
+                }
+ 
+                errorMessage.textContent = ''; // Clear any previous error message
+                return true; // Allow form submission
+            }
+        </script>
+
